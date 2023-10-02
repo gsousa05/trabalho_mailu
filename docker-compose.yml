@@ -11,7 +11,7 @@ services:
     image: redis:alpine
     restart: always
     volumes:
-      - "/mailData/redis:/data"
+      - "./mailData/redis:/data"
     depends_on:
       - resolver
     dns:
@@ -40,8 +40,8 @@ services:
       - default
       - webmail
     volumes:
-      - "/mailData/certs:/certs"
-      - "/mailData/overrides/nginx:/overrides:ro"
+      - "./mailData/certs:/certs"
+      - "./mailData/overrides/nginx:/overrides:ro"
     depends_on:
       - resolver
     dns:
@@ -64,8 +64,8 @@ services:
       options:
         tag: mailu-admin
     volumes:
-      - "/mailData/data:/data"
-      - "/mailData/dkim:/dkim"
+      - "./mailData/data:/data"
+      - "./mailData/dkim:/dkim"
     depends_on:
       - redis
       - resolver
@@ -81,8 +81,8 @@ services:
       options:
         tag: mailu-imap
     volumes:
-      - "/mailData/mail:/mail"
-      - "/mailData/overrides/dovecot:/overrides:ro"
+      - "./mailData/mail:/mail"
+      - "./mailData/overrides/dovecot:/overrides:ro"
     depends_on:
       - front
       - resolver
@@ -98,8 +98,8 @@ services:
       options:
         tag: mailu-smtp
     volumes:
-      - "/mailData/mailqueue:/queue"
-      - "/mailData/overrides/postfix:/overrides:ro"
+      - "./mailData/mailqueue:/queue"
+      - "./mailData/overrides/postfix:/overrides:ro"
     depends_on:
       - front
       - resolver
@@ -117,8 +117,8 @@ services:
       options:
         tag: mailu-antispam
     volumes:
-      - "/mailData/filter:/var/lib/rspamd"
-      - "/mailData/overrides/rspamd:/overrides:ro"
+      - "./mailData/filter:/var/lib/rspamd"
+      - "./mailData/overrides/rspamd:/overrides:ro"
     depends_on:
       - front
       - redis
@@ -136,8 +136,8 @@ services:
     restart: always
     env_file: mailu.env
     volumes:
-      - "/mailData/webmail:/data"
-      - "/mailData/overrides/roundcube:/overrides:ro"
+      - "./mailData/webmail:/data"
+      - "./mailData/overrides/roundcube:/overrides:ro"
     networks:
       - webmail
     depends_on:
